@@ -1,0 +1,38 @@
+name: Basic CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Build backend
+      - name: Build backend
+        run: |
+          docker build -t ci-cd-demo-backend ./backend
+
+      # Build frontend
+      - name: Build frontend
+        run: |
+          docker build -t ci-cd-demo-frontend ./frontend
+
+      # Run containers
+      - name: Run docker-compose
+        run: |
+          docker compose up -d --build
+          sleep 10
+          docker ps -a
+
+
+      # Cleanup
+      - name: Clean up
+        if: always()
+        run: docker-compose down
