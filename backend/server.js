@@ -6,4 +6,4 @@ app.get('/', (req, res) => {
   res.json({ message: "Hello from Backend 👋" });
 });
 
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Backend running on port ${PORT} and i love this project`));
